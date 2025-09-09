@@ -1,0 +1,72 @@
+# Default configuration for Stealth Sales Coach v1.1
+# Copy this file and modify as needed
+
+audio:
+  sample_rate: 16000
+  chunk_duration: 5.0
+  # input_device: "BlackHole 2ch"  # For system audio capture (recommended for calls)
+  # input_device: "MacBook Air Microphone"  # For mic only (basic testing)
+  # input_device: "Aggregate Device"  # For combined mic + system audio
+  vad_threshold: 0.3  # Increased from 0.02 to reduce phantom detection
+  vad_model: "silero"  # Falls back to energy-based if torchaudio unavailable
+  max_buffer_size: 100
+  buffer_cleanup_interval: 60.0
+
+models:
+  # Whisper settings  
+  whisper_model: "base"  # Options: tiny, base, small, medium, large
+  whisper_device: "auto"
+  
+  # LLM settings (v1.1: Fixed coaching system with Phi-3.5 instruction format)
+  llm_model_path: "models_cache/Phi-3.5-mini-instruct-Q4_K_M.gguf"  # ~2.3GB GGUF model
+  llm_model_name: "phi-3.5-mini"
+  llm_context_length: 2048  # Works well for conversation context
+  llm_max_tokens: 200       # Sufficient for coaching advice
+  llm_temperature: 0.3      # Balanced creativity vs. consistency
+  
+  # Diarization settings
+  diarization_model: "pyannote"
+  min_speakers: 2
+  max_speakers: 4
+
+coaching:
+  # Timing settings
+  coaching_interval: 30.0  # seconds
+  min_transcript_length: 3  # minimum turns before coaching
+  
+  # Coaching behavior
+  priority_threshold: 0.7
+  max_simultaneous_advice: 2
+  
+  # Context settings
+  conversation_context_window: 10
+  enable_conversation_memory: true
+  
+  # Enabled coaching categories
+  enabled_categories:
+    - "QUESTIONING"
+    - "LISTENING"
+    - "OBJECTION_HANDLING"
+    - "VALUE_PROPOSITION"
+    - "CLOSING"
+    - "RAPPORT_BUILDING"
+
+system:
+  # Resource limits
+  max_memory_percent: 50.0
+  max_cpu_percent: 60.0
+  
+  # Paths
+  models_cache_dir: "models_cache"
+  logs_dir: "logs"
+  config_dir: "config"
+  
+  # Logging
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_to_file: true
+  log_rotation: true
+  
+  # Privacy settings
+  store_transcripts: false
+  store_audio: false
+  anonymize_logs: true

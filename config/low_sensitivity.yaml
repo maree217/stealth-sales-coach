@@ -1,0 +1,71 @@
+# Low sensitivity config for quiet microphones
+# Optimized for MacBook Air built-in microphone with low audio levels
+
+audio:
+  sample_rate: 16000
+  chunk_duration: 5.0
+  # input_device: "MacBook Air Microphone"  # Built-in microphone  
+  input_device: "Call Monitor"  # Aggregate device for full call monitoring
+  vad_threshold: 0.0008  # Extra low - based on test showing average 0.001 levels
+  vad_model: "silero"  
+  max_buffer_size: 100
+  buffer_cleanup_interval: 60.0
+
+models:
+  # Whisper settings  
+  whisper_model: "base"  
+  whisper_device: "auto"
+  
+  # LLM settings
+  llm_model_path: "models_cache/Phi-3.5-mini-instruct-Q4_K_M.gguf"
+  llm_model_name: "phi-3.5-mini"
+  llm_context_length: 2048
+  llm_max_tokens: 200
+  llm_temperature: 0.3
+  
+  # Diarization settings
+  diarization_model: "pyannote"
+  min_speakers: 2
+  max_speakers: 4
+
+coaching:
+  # Timing settings
+  coaching_interval: 30.0
+  min_transcript_length: 3
+  
+  # Coaching behavior
+  priority_threshold: 0.7
+  max_simultaneous_advice: 2
+  
+  # Context settings
+  conversation_context_window: 10
+  enable_conversation_memory: true
+  
+  # Enabled coaching categories
+  enabled_categories:
+    - "QUESTIONING"
+    - "LISTENING"
+    - "OBJECTION_HANDLING"
+    - "VALUE_PROPOSITION"
+    - "CLOSING"
+    - "RAPPORT_BUILDING"
+
+system:
+  # Resource limits
+  max_memory_percent: 50.0
+  max_cpu_percent: 60.0
+  
+  # Paths
+  models_cache_dir: "models_cache"
+  logs_dir: "logs"
+  config_dir: "config"
+  
+  # Logging
+  log_level: "INFO"
+  log_to_file: true
+  log_rotation: true
+  
+  # Privacy settings
+  store_transcripts: false
+  store_audio: false
+  anonymize_logs: true
