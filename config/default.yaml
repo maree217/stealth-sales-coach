@@ -20,7 +20,7 @@ models:
   # LLM settings (v1.1: Fixed coaching system with Phi-3.5 instruction format)
   llm_model_path: "models_cache/Phi-3.5-mini-instruct-Q4_K_M.gguf"  # ~2.3GB GGUF model
   llm_model_name: "phi-3.5-mini"
-  llm_context_length: 2048  # Works well for conversation context
+  llm_context_length: 8192  # Increased to prevent context size mismatch
   llm_max_tokens: 200       # Sufficient for coaching advice
   llm_temperature: 0.3      # Balanced creativity vs. consistency
   
