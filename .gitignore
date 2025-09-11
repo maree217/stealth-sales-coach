@@ -86,3 +86,6 @@ restored-context.md
 # Large models (keep in gitignore for now, will use Git LFS later)
 models_cache/*.gguf
 models_cache/*.bin
+
+# Archive folder (development files)
+archive/
